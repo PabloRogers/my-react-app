@@ -7,6 +7,7 @@ import EventList from "./components/EventList";
 import NewEventForm from "./components/NewEventForm";
 
 function App() {
+  // test
   const [showModal, setShowModal] = useState(false);
   const [showEvents, setShowEvent] = useState(true);
   const [events, setEvents] = useState([]);
