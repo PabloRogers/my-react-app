@@ -1,23 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import Title from "./components/Title";
+import React from "react";
+import Modal from "./components/Modal";
+import EventList from "./components/EventList";
+import NewEventForm from "./components/NewEventForm";
 
 function App() {
+  // useSate returns a array
+  // first value is the state value, the second one is the function to change to state value. You can set the names to what ever you want;
+  // the setName function changes the value of 'name' and then triggers react to re-render the componetn
+  const [showModal, setShowModal] = useState(false);
+  const [showEvents, setShowEvent] = useState(true);
+  const [events, setEvents] = useState([]);
+
+  const subtitle = "All the latest events in Mairoland";
+
+  const handleClick = (id) => {
+    setEvents((prevEvents) => {
+      return prevEvents.filter((event) => {
+        return id !== event.id;
+      });
+    });
+  };
+
+  const addEvent = (event) => {
+    setEvents((prevEvents) => {
+      return [...prevEvents, event];
+    });
+    setShowModal(false);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Title title="Events in your area" subtitle={subtitle} />
+
+      {showEvents && (
+        <div>
+          <button onClick={() => setShowEvent(false)}>Hide Events</button>
+        </div>
+      )}
+
+      {!showEvents && (
+        <div>
+          <button onClick={() => setShowEvent(true)}>Show Events</button>
+        </div>
+      )}
+
+      {showEvents && (
+        <EventList eventsList={events} handleClick={handleClick} />
+      )}
+
+      <div>
+        <button
+          onClick={() => {
+            setShowModal(true);
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          Add New Events
+        </button>
+      </div>
+
+      {showModal && (
+        <Modal isSalesModal={true}>
+          <NewEventForm addEvent={addEvent} />
+        </Modal>
+      )}
     </div>
   );
 }
