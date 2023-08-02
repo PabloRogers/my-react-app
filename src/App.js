@@ -7,9 +7,6 @@ import EventList from "./components/EventList";
 import NewEventForm from "./components/NewEventForm";
 
 function App() {
-  // useSate returns a array
-  // first value is the state value, the second one is the function to change to state value. You can set the names to what ever you want;
-  // the setName function changes the value of 'name' and then triggers react to re-render the componetn
   const [showModal, setShowModal] = useState(false);
   const [showEvents, setShowEvent] = useState(true);
   const [events, setEvents] = useState([]);
